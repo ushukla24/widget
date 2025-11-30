@@ -5,7 +5,7 @@
   <!-- Metadata -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Page Title</title>
+  <title>Variables</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,16 +15,133 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="../css/widget-page.css">
+  <link rel="stylesheet" href="../css/multiple-choice-widget.css">
+  <link rel="stylesheet" href="../css/arrange-code-widget.css">
 </head>
 
 <body>
   <script type="module">
     import { WidgetPage } from "../js/WidgetPage.js";
+    import { MultipleChoiceWidget } from "../js/MultipleChoiceWidget.js";
 
     document.addEventListener("DOMContentLoaded", () => {
       const widgetPage = new WidgetPage("widget-page-template", document.body);
+      const display = document.getElementById('variable-display');
+      const inc = document.getElementById('inc-btn');
+      const dec = document.getElementById('dec-btn');
+      const setInput = document.getElementById('set-input');
+      const setBtn = document.getElementById('set-btn');
+      const feedback = document.getElementById('feedback');
+
+      if (display && inc && dec && setInput && setBtn && feedback) {
+        const flash = () => {
+          display.style.transition = 'background 0.18s';
+          display.style.background = 'hsl(200 90% 95%)';
+          setTimeout(() => display.style.background = '', 180);
+        };
+
+        const update = (val) => {
+          display.textContent = String(val);
+          setInput.value = String(val);
+          feedback.textContent = `score is now ${val}`;
+          flash();
+        };
+
+        inc.addEventListener('click', () => update(Number(display.textContent || 0) + 1));
+        dec.addEventListener('click', () => update(Number(display.textContent || 0) - 1));
+        setBtn.addEventListener('click', () => {
+          const n = Number(setInput.value);
+          update(Number.isFinite(n) ? n : 0);
+        });
+        setInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') setBtn.click(); });
+      }
+
+
+      widgetPage.registerWidget(".multiple-choice-widget", MultipleChoiceWidget);
     });
   </script>
-</body>
 
+  <div class="column column-md">
+    <!-- title + description -->
+    <section style="display:flex">
+      <div class="text">
+        <h1>Variables</h1>
+        <p>A <strong>variable</strong> is a lot like a labeled box. You can put something inside the box, and you can swap out the contents whenever you want.</p>
+      </div>
+      <button class="button-semantic button-primary button-continue">
+        <span class="button-text">Continue</span>
+        <svg class="button-icon" width="16" height="16" viewbox="0 0 16 16" fill="none" 
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 8L14.59 6.59L9 12.17V0H7V12.17L1.42 6.58L0 8L8 16L16 8Z" fill="white" />
+        </svg>
+      </button>
+    </section>
+    <!-- interactive component -->
+    <section style="display:none;flex-direction:column;gap:1rem;align-items:center;">
+      <div class="text">
+        <p>Meet the variable called <b>score</b>. Use the buttons or type a new number to change its value.</p>
+      </div>
+
+      <div class="widget" id="variable-widget" style="width:100%;max-width:420px;border-radius:8px;padding:1rem;border:0.12em solid var(--neutral-100);display:flex;flex-direction:column;gap:0.75rem;align-items:center;">
+        <div style="display:flex;gap:1rem;align-items:center;">
+          <div style="font-weight:600">score =</div>
+          <div id="variable-display" style="min-width:3.5rem;text-align:center;font-size:1.5rem;padding:0.25rem 0.5rem;border-radius:6px;background:var(--neutral-0);border:1px solid var(--neutral-100);">0</div>
+        </div>
+
+        <div style="display:flex;gap:0.5rem;">
+          <button id="dec-btn" class="button-semantic button-secondary">-</button>
+          <button id="inc-btn" class="button-semantic button-primary">+</button>
+        </div>
+
+        <div style="display:flex;gap:0.5rem;align-items:center;">
+          <label for="set-input" style="font-size:0.9rem">Set value:</label>
+          <input id="set-input" type="number" value="0" style="width:5.5rem;padding:0.35rem;border-radius:6px;border:1px solid var(--neutral-100);">
+          <button id="set-btn" class="button-semantic button-primary" style="padding:0.35rem 0.6rem;">Set</button>
+        </div>
+
+        <div id="feedback" aria-live="polite" style="font-size:0.9rem;color:var(--neutral-600);">Try changing the number.</div>
+      </div>
+
+      <button class="button-semantic button-primary button-continue">
+        <span class="button-text">Continue</span>
+        <svg class="button-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 8L14.59 6.59L9 12.17V0H7V12.17L1.42 6.58L0 8L8 16L16 8Z" fill="white" />
+        </svg>
+      </button>
+    </section>
+
+    <section>
+      <div class="text">
+        <p>The variable <strong>score</strong> is one type of variable that holds a value called an <strong>integer</strong>.</p>
+        <p><strong>Integers</strong> are positive and negative whole numbers (e.g. -3, 0, 42).</p>
+      </div>
+
+      <button class="button-semantic button-primary button-continue">
+        <span class="button-text">Continue</span>
+        <svg class="button-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 8L14.59 6.59L9 12.17V0H7V12.17L1.42 6.58L0 8L8 16L16 8Z" fill="white" />
+        </svg>
+      </button>
+    </section>
+
+    <section>
+      <div class="text">
+        <h2>What are some other types of variables?</h2>
+        <p>Some other common types of variables include:</p>
+        <ul>
+          <li><strong>Characters</strong>: a single letter or symbol, like <code>'A'</code> or <code>'?'</code>.</li>
+          <li><strong>Strings</strong>: words or sentences wrapped in quotes, like "hello world!" or "My score was 6.".</li>
+          <li><strong>Booleans</strong>: true/false values that answer yes/no questions, like <code>true</code> or <code>false</code>.</li>
+        </ul>
+      </div>
+
+       <div class="text">
+        <h1>Conclusion</h1>
+        <p>Congratulations! You have learned the basics of variables.</p>
+      </div>
+    </section>
+  </div>
+</body>
 </html>
