@@ -53,7 +53,7 @@ A **text** element displays text and can contain multiple heading and paragraph 
   <div class="column column-md">
     <section>
       <div class="text">
-        <h1>Katherine Johnson</h1>
+        <h1>Using a Variable</h1>
         <p>Creola Katherine Johnson ...</p>
       </div>
     </section>

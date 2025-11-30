@@ -94,8 +94,10 @@ export class WidgetPage {
    * @param {Event} event - The click event
    */
   revealNextSection(event) {
+    console.log('WidgetPage.revealNextSection called', { target: event?.target });
     const button = event.target.closest('button');
     const nextSection = button.closest('section').nextElementSibling;
+    console.log('WidgetPage.revealNextSection found nextSection:', { nextSection });
     if (!nextSection) {
       return;
     }
